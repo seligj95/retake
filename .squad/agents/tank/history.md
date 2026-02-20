@@ -231,3 +231,29 @@
 - Multiple redactions can overlap in time and space — compositor applies them sequentially
 - RedactionRegion already has UI overlay (`RedactionDrawingOverlay`) and timeline view (`RedactionTimelineOverlay`) in RedactionOverlay.swift
 
+
+### 2026-02-20: Phase 5 Export Engine Complete
+**Scope:** ExportEngine, GIFExporter, RedactionCompositor, ExportSheet integration  
+**Status:** ✅ Implemented (389s)  
+**Files:** Export/ExportEngine.swift, Export/GIFExporter.swift, Export/RedactionCompositor.swift, Views/ExportSheet.swift  
+**Key Pattern:** Reverse-chronological cut removal prevents offset drift in AVMutableComposition  
+
+**Learnings:**
+- Reverse sort cuts by start time before calling `removeTimeRange()` sequentially
+- AVAssetImageGenerator works on both raw assets and compositions (post-cut)
+- CGImageDestination handles animated GIF encoding efficiently without intermediate frame files
+- ExportEngine coordinates three specialized modules: composition management, image extraction, UI feedback
+
+**Integration:**
+- ExportSheet triggered from menu with cut/redaction regions ready
+- Presets: High Quality (4K HEVC .mov), Balanced (1080p HEVC .mp4), Small File (720p HEVC .mp4)
+- Redaction export via RedactionCompositor CIFilter handler (per-frame processing)
+
+**Team Context:**
+- Morpheus: ExportSheet UI, preset buttons, progress bar
+- Neo: Project model updated for recent exports tracking (future)
+- Tank: Core export mechanics, composition editing, redaction filtering
+
+**Decisions Logged:**
+- Phase 5: Reverse Chronological Cut Region Removal
+- Phase 6: AVVideoComposition Pattern for Redaction Export

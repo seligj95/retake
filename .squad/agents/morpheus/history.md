@@ -764,3 +764,35 @@ Integrated ProjectStore and PreferencesWindow into DemoRecorderApp.swift main co
 3. **ProjectStore Auto-Save:** Call projectStore.save() after recording completes
 4. **Menu Badge:** Show recent project count in menu (e.g., "Open Recent (5)")
 
+
+### 2026-02-20: Phase 5/6/8 UI Integration — Export Sheet, Redaction Overlay, Preferences
+**From:** Scribe cross-agent sync  
+**Status:** Documented  
+
+**Completed Phases:**
+1. **Phase 5 ExportSheet:** Format/quality preset buttons, progress bar, cancellation
+2. **Phase 6 Redaction Overlay:** Normalized coordinates, CIFilter preview, 8-point resize handles
+3. **Phase 8 Preferences & Coordinator:** @AppStorage persistence, RecordingCoordinator window lifecycle
+
+**Key Patterns Established:**
+- **ExportSheet:** Buttons for presets (High Quality, Balanced, Small File) → ExportEngine
+- **RedactionOverlay:** Drag-to-draw UI with normalized (0.0-1.0) coordinate model
+- **PreferencesWindow:** @AppStorage wrappers for all settings (lookbackDuration, audioFeedback, hotkeys)
+- **RecordingCoordinator:** Central orchestrator for ProjectStore, window lifecycle, audio feedback
+
+**Team Handoff Notes:**
+- ExportSheet calls ExportEngine methods; progress binding auto-updates view
+- RedactionOverlay creates RedactionRegion model (stored in Project for persistence)
+- PreferencesWindow settings flow to RecordingEngine via UserDefaults during recording
+- Coordinator manages window instances (no duplication via optional property replacement)
+
+**Phase 7 Preview (Transcription UI):**
+- TranscriptPanel with word-level seek (single-click) and multi-select (double-click)
+- Search via `.searchable` modifier (⌘F built-in)
+- Selection → "Create Cut Region" button (callback to MarkerManager)
+
+**Files Updated:**
+- Views/ExportSheet.swift — New
+- Views/RedactionOverlay.swift — Enhanced (resize handles, mode switching)
+- Views/PreferencesWindow.swift — Complete (@AppStorage integration)
+- DemoRecorderApp.swift — Coordinator pattern finalized

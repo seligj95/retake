@@ -194,3 +194,21 @@ ProjectName.demoproject.json  (metadata only, video stays external)
 **Decision:** neo-redaction-model-conflict.md (resolved by Morpheus choice)  
 **Impact:** Project.swift redactionRegions field ready to uncomment in Phase 8 persistence
 
+
+### 2026-02-20: Phase 5/6 Export & Redaction Integration Points
+**From:** Scribe cross-agent sync  
+**Status:** Observed (decisions documented)  
+
+**Key Integration Points for Project Model (Phase 8):**
+1. **Project.redactionRegions field:** Ready to uncomment now that RedactionRegion consolidated to `start/end CMTime`
+2. **Project.exportHistory:** Track recent exports (preset used, export format, timestamp)
+3. **Project.transcriptMetadata:** Placeholder for Phase 7 transcription results (word count, language, confidence)
+
+**Redaction Model Status:**
+- Conflict resolved: Single canonical `RedactionRegion` with `start/end CMTime, rect, style`
+- Matches existing CutRegion and ChapterMarker patterns (consistency across models)
+- Export path: RedactionCompositor handles normalized → absolute coordinate transformation
+
+**Files Affected (Phase 8 persistence):**
+- Project.swift: uncomment redactionRegions field once Phase 6 model finalized
+- ProjectStore.swift: ensure redactionRegions serialized in project Codable
