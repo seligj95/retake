@@ -37,3 +37,25 @@ All 3 required changes implemented by Morpheus:
 Phase 1 scaffold complete and ready for Phase 2 (ScreenCaptureKit integration).
 
 **Highest risk identified:** Sandbox + ScreenCaptureKit compatibility. Schedule spike for Phase 2, day 1.
+
+### 2025-07-25: Phase 1 Final Verification (Deep Review)
+**Status:** ✅ APPROVED — All Phase 1 deliverables verified
+
+**Xcode project (`DemoRecorder.xcodeproj`):**
+- Two native targets: DemoRecorder (app) + DemoRecorderTests (unit-test)
+- Bundle ID: `com.demorecorder.app`, Swift 6.0, macOS 15.0 deployment target
+- Hardened runtime enabled, entitlements and Info.plist linked in build settings
+- Test target has correct `TEST_HOST` and `BUNDLE_LOADER` pointing to app
+
+**App code (`DemoRecorderApp.swift`):**
+- `@main` entry, `MenuBarExtra` with `.menu` style ✅
+- All 4 menu items: New Recording (⇧⌘R), Open Recent (disabled), Preferences (⌘,), Quit (⌘Q)
+- `AppDelegate` via `@NSApplicationDelegateAdaptor`
+
+**SPM build:** Compiles clean (1 warning about unhandled xcassets — non-blocking)
+
+**Non-blocking cleanup for future phases:**
+- `Package.swift`: Add `Assets.xcassets` to `exclude:` list to suppress SPM warning
+- Entitlements: Remove unused keys (`personal-information.location`, empty `apple-events`)
+- KeyboardShortcuts: Re-add SPM dependency when Swift 6.2 macro compat is resolved
+- Menu bar icon: Currently uses `systemImage: "record.circle"` — custom icon can come later

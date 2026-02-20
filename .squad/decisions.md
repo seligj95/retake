@@ -179,3 +179,40 @@ For now, Xcode's native SPM integration (File → Add Package Dependencies) mana
 
 #### Outcome
 Phase 1 now has production-ready Xcode project structure. All 3 of Neo's required changes implemented.
+
+---
+
+### 2025-02-20: SCRecordingOutput Pattern for macOS 15+
+**By:** Trinity (Swift/macOS Specialist)  
+**Status:** Implemented  
+**Scope:** Phase 2 — Recording Engine
+
+#### Context
+Phase 2 requires implementing screen recording with ScreenCaptureKit. macOS 15.0+ introduces `SCRecordingOutput`, which simplifies the recording pipeline by eliminating the need for manual `AVAssetWriter` management.
+
+#### Decision
+Use `SCRecordingOutput` + `SCRecordingOutputConfiguration` for direct file writing instead of traditional `SCStreamOutput` + `AVAssetWriter` pattern.
+
+#### Rationale
+**Advantages:**
+1. **Simplicity:** No manual AVAssetWriter setup, CMSampleBuffer handling, or timing synchronization
+2. **Platform Integration:** Native macOS 15+ API with automatic codec configuration
+3. **Reliability:** Apple manages the entire recording pipeline internally
+4. **HEVC Support:** First-class HEVC encoding via `videoCodecType = .hevc`
+
+**Trade-offs:**
+- Requires macOS 15.0+ minimum (already our deployment target)
+- Less control over individual frame processing (acceptable for this use case)
+- Audio codec is auto-configured (no manual selection needed)
+
+#### Implementation Details
+- `SCRecordingOutputConfiguration` has no `audioCodecType` property (auto-configured)
+- Audio capture controlled via `SCStreamConfiguration` flags: `capturesAudio`, `captureMicrophone`, `excludesCurrentProcessAudio`
+- Delegate receives lifecycle events: start, finish, error
+
+#### Alternatives Considered
+**Option A: AVAssetWriter Pattern (macOS 12+)** — More portable but significantly more complex, requires manual CMSampleBuffer processing, timing synchronization challenges. **Rejected:** Unnecessary complexity given macOS 15+ requirement.
+
+#### Related Decisions
+- Minimum macOS 15.0+ deployment target (Phase 0)
+- HEVC codec for high-quality output (this decision)

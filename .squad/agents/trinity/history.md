@@ -38,3 +38,63 @@ Phase 1 entitlements and privacy configuration integrated into production Xcode 
 
 **Next phase (Phase 2):** Validate sandbox does not block ScreenCaptureKit at runtime (highest identified risk).
 **Phase 7 prep:** NSSpeechRecognitionUsageDescription already added to Info.plist to avoid churn.
+
+### 2025-02-20: Phase 2 — Recording Engine Implementation
+**Status:** ✅ COMPLETED
+
+Built complete ScreenCaptureKit recording engine with macOS 15+ SCRecordingOutput integration.
+
+**Files Created:**
+- `DemoRecorder/Recording/RecordingEngine.swift` — Core recording engine with SCK integration
+- `DemoRecorder/Recording/CaptureSourcePicker.swift` — UI for selecting displays/windows
+- `DemoRecorder/Recording/RegionSelector.swift` — Full-screen overlay for region selection
+- `DemoRecorder/DemoRecorderApp.swift` — Updated with RecordingCoordinator integration
+
+**Architecture Decisions:**
+
+1. **macOS 15+ SCRecordingOutput Pattern**
+   - Uses `SCRecordingOutput` + `SCRecordingOutputConfiguration` to write directly to `.mov`
+   - No manual AVAssetWriter needed (major simplification vs. macOS 14)
+   - Delegate pattern with `SCRecordingOutputDelegate` for lifecycle events
+   - Outputs HEVC video to temp directory with UUID-based filenames
+
+2. **Concurrency & Sendable**
+   - Used `@preconcurrency import ScreenCaptureKit` to suppress Sendable warnings
+   - ScreenCaptureKit APIs are not yet Sendable-compliant in macOS 15
+   - All recording operations are `@MainActor` isolated via `@Observable` class
+
+3. **State Management**
+   - Custom State enum with computed properties (`.isIdle`, `.isStopped`, `.isRecording`)
+   - Avoids Equatable conformance issues with associated values (`.failed(Error)`)
+   - Observable pattern for SwiftUI integration
+
+4. **Capture Modes**
+   - Full-screen: `SCContentFilter(display:excludingWindows:)`
+   - Single-window: `SCContentFilter(desktopIndependentWindow:)`
+   - Region: Display filter + sourceRect/destinationRect (not yet implemented)
+
+5. **Configuration**
+   - Default: 1920x1080 @ 60fps, HEVC codec
+   - Audio: System audio + microphone, excluding current process
+   - 48kHz stereo audio, 5-frame queue depth
+
+6. **UI Integration**
+   - `RecordingCoordinator` mediates between menu bar and recording engine
+   - Dynamic activation policy: `.regular` for picker window, `.accessory` during recording
+   - CaptureSourcePicker enumerates displays/windows via `SCShareableContent.current`
+   - RegionSelector uses borderless NSWindow at `.screenSaver` level for overlay
+
+**Key Patterns:**
+- Async/await throughout (no completion handlers)
+- Swift 6.0 strict concurrency enabled
+- Removed `#Preview` macros (SPM build incompatibility)
+- Window management: NSWindow + NSHostingView for SwiftUI integration
+
+**Technical Notes:**
+- `SCRecordingOutputConfiguration` has no `audioCodecType` property (video-only config)
+- Audio automatically captured based on `SCStreamConfiguration` flags
+- Region selection UI built but not wired to engine (sourceRect NYI)
+
+**Build Status:** ✅ Compiles cleanly with `swift build`
+
+**Next Phase:** Phase 3 (Hotkey System & Marker Management) — global shortcuts, MarkerManager, FloatingStatusBar
