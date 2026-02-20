@@ -59,3 +59,138 @@ Phase 1 scaffold complete and ready for Phase 2 (ScreenCaptureKit integration).
 - Entitlements: Remove unused keys (`personal-information.location`, empty `apple-events`)
 - KeyboardShortcuts: Re-add SPM dependency when Swift 6.2 macro compat is resolved
 - Menu bar icon: Currently uses `systemImage: "record.circle"` — custom icon can come later
+
+### 2025-02-21: Phase 8 Project Persistence Models
+**Date:** 2025-02-21  
+**By:** Neo (Lead Architect)  
+**Status:** ✅ Implemented  
+**Scope:** Phase 8 — Project Persistence & Polish
+
+#### Context
+Phase 8 requires implementing project persistence to save/load recordings with all editing metadata (cut regions, chapter markers, export settings, transcripts). Must support both directory bundle (.demoproject package) and JSON sidecar (.demoproject.json) formats.
+
+#### Implementation
+
+**Created two new model files:**
+
+1. **DemoRecorder/Models/Project.swift** (165 lines)
+   - `Project` struct (Codable, Identifiable) with metadata:
+     - UUID, name, creation/modification dates
+     - Raw video URL, cut regions, chapter markers
+     - Transcript (optional String for Phase 7)
+     - Export settings (resolution, codec, quality)
+     - Version field for forward/backward compatibility (v1.0)
+   - `ExportSettings` struct with codec options (HEVC, H.264, ProRes)
+   - Quality presets (low/medium/high/lossless)
+   - Convenience method: `Project.fromRecording()` to create from RecordingEngine output
+
+2. **DemoRecorder/Models/ProjectStore.swift** (295 lines)
+   - `@Observable` class for persistence operations
+   - Methods:
+     - `save(project:format:to:)` — async save with bundle or sidecar format
+     - `load(from:)` — async load from URL
+     - `listRecentProjects()` — get cached recent projects list
+     - `deleteProject(at:)` — remove from disk and recent list
+   - Recent projects tracking (max 10) persisted via UserDefaults with security-scoped bookmarks
+   - Error handling with custom `ProjectStoreError` enum
+   - JSON encoder/decoder with ISO8601 date strategy
+
+**Directory Bundle Format (.demoproject):**
+```
+ProjectName.demoproject/
+├── project.json          (metadata + references)
+└── raw-video.mov         (copied into bundle)
+```
+
+**JSON Sidecar Format (.demoproject.json):**
+```
+ProjectName.demoproject.json  (metadata only, video stays external)
+```
+
+#### Architectural Decisions
+
+**1. Dual Format Support**
+- Bundle format for self-contained projects (good for archival/sharing)
+- Sidecar format for lightweight metadata (video stays in original location)
+- Format choice at save time via `ProjectFormat` enum
+
+**2. Recent Projects via Security-Scoped Bookmarks**
+- UserDefaults stores bookmark data (not raw file paths)
+- Handles sandboxed app access to user-selected files
+- Auto-trims to 10 most recent projects
+
+**3. Async/Await for All I/O**
+- All save/load operations use `async throws`
+- Safe for main actor isolation (ProjectStore is @MainActor)
+- File I/O doesn't block UI thread
+
+**4. Forward Compatibility**
+- Version field ("1.0") for future schema migrations
+- Redaction regions field commented out due to type conflicts (Phase 6 will resolve)
+- Extensible export settings struct
+
+#### Type Conflict Resolution
+
+**RedactionRegion Ambiguity:**
+- Found 3 competing definitions: Models/RedactionRegion.swift, Views/RedactionOverlay.swift, Project.swift
+- Removed duplicate from Project.swift to avoid compiler errors
+- Added TODO comment for Phase 6 to consolidate models
+- Models/RedactionRegion.swift uses `CMTimeRange`, RedactionOverlay.swift uses `start/end CMTime`
+- Decision: Phase 6 owner (likely Morpheus) should unify these into single canonical definition
+
+**CGSize/CGRect Codable:**
+- Already defined in Models/RedactionRegion.swift with `@retroactive Codable`
+- Removed duplicate conformances from Project.swift
+
+#### Integration Points
+
+**Phase 3 (MarkerManager):**
+- CutRegion, ChapterMarker already Codable (via CMTime extension)
+- Project stores arrays directly without transformation
+
+**Phase 5 (ExportEngine):**
+- ExportSettings.codec maps to AVVideoCodecType
+- Quality presets map to bitrate configurations
+
+**Phase 7 (Transcript):**
+- `transcript: String?` ready for Speech framework integration
+
+**Future (Phase 9 UI):**
+- ProjectStore.listRecentProjects() feeds "Open Recent" menu
+- ProjectStore.save/load hooks into menu bar actions
+
+#### Files Created
+- `DemoRecorder/Models/Project.swift` — core project model
+- `DemoRecorder/Models/ProjectStore.swift` — persistence layer
+
+#### Build Status
+✅ Project.swift and ProjectStore.swift compile without errors  
+⚠️ Pre-existing build issues in TranscriptPanel.swift (unrelated to Phase 8)
+
+#### Next Steps for Phase 8 Completion
+1. **UI Integration (Morpheus):**
+   - Wire ProjectStore into menu bar "Open Recent" menu
+   - Add save dialog for "Save Project As..."
+   - Auto-save after editing operations (cut region changes, etc.)
+
+2. **Testing (Trinity):**
+   - Unit tests for Project Codable conformance
+   - Integration tests for bundle vs sidecar formats
+   - Recent projects persistence tests
+
+3. **Polish:**
+   - Progress indicators for large project saves/loads
+   - Error alerts for file I/O failures
+   - Project thumbnail generation for "Open Recent" menu
+
+---
+
+## Cross-Agent Updates
+
+### 2026-02-20: Phase 6 Complete — Redaction Model Consolidation
+**From:** Scribe  
+**Scope:** RedactionRegion model consolidated to `start/end CMTime` pattern  
+**Status:** Complete. Matches CutRegion/ChapterMarker consistency  
+**Decision:** neo-redaction-model-conflict.md (resolved by Morpheus choice)  
+**Impact:** Project.swift redactionRegions field ready to uncomment in Phase 8 persistence
+
