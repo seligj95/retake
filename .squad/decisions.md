@@ -359,3 +359,75 @@ struct FloatingStatusBarView: View {
 - Apple HIG: [Panels and Alerts](https://developer.apple.com/design/human-interface-guidelines/panels)
 - [NSPanel Documentation](https://developer.apple.com/documentation/appkit/nspanel)
 - [NSHostingView Documentation](https://developer.apple.com/documentation/swiftui/nshostingview)
+
+---
+
+### 2026-02-20: Phase 4 Review UI Architecture
+**Date:** 2026-02-20  
+**Agent:** Morpheus (SwiftUI/UI Specialist)  
+**Status:** ✅ Implemented  
+**Affected Components:** ReviewWindow, TimelineView, ThumbnailStrip, WaveformView, CutRegionOverlay, VideoPreviewPlayer
+
+#### Context
+Phase 4 delivers the core differentiator of DemoRecorder: a precision timeline editing UI for bracket-cut review. Implementation balanced frame-precise scrubbing, smooth 60fps playback, async asset loading, Swift 6 concurrency safety, and macOS 15+ modern APIs.
+
+#### Key Decisions
+
+**1. AVPlayer Integration via NSHostingView**
+- Use AVPlayerView (AppKit) wrapped in NSHostingView for video preview
+- Enables native hardware acceleration + frame-step controls not available in SwiftUI VideoPlayer
+- J/K/L playback speed controls work directly on AVPlayer.rate
+
+**2. Timeline Layering via ZStack**
+- Single ZStack composition: ThumbnailStrip → WaveformView → CutRegionsOverlay → ChapterMarkersOverlay → Playhead
+- GeometryReader provides shared coordinate system for all layers
+- Vertical offsets: waveform at +60pt below thumbnails
+
+**3. Async Asset Loading via Task Modifier**
+- `.task { }` modifier triggers thumbnail/waveform generation
+- Auto-cancellation on view disappear; progress tracked via @Observable state
+- Non-blocking main thread for long recordings
+
+**4. Concurrency Safety: nonisolated(unsafe)**
+- AVAssetImageGenerator marked `nonisolated(unsafe)` in ThumbnailGenerator
+- AVAssetImageGenerator.image(at:) is thread-safe; @MainActor still guards state mutations
+- Avoids false-positive Swift 6 data race warnings
+
+**5. Cut Region Drag: Independent Gestures**
+- Each cut region has two independent DragGestures (start/end handles)
+- Clamped at 10pt minimum separation; immediate visual feedback via isDragging state
+- Callbacks update MarkerManager.cutRegions in real-time
+
+**6. Playhead Scrubbing: Click-to-Seek**
+- Entire timeline surface is draggable for playhead scrubbing
+- DragGesture with minimumDistance: 0 handles both click and drag
+- isDraggingPlayhead suppresses animation during drag
+
+**7. Zoom Model: Linear Scaling**
+- Timeline base width = 1000pt × zoomLevel (1x–10x)
+- Thumbnail count = 50 × zoomLevel; waveform samples = 1000 × zoomLevel
+- ScrollView handles overflow automatically
+
+**8. Keyboard Shortcuts: .onKeyPress() (Window-Scoped)**
+- Shortcuts: Space (play/pause), Left/Right (frame step), J/K/L (backward/pause/forward speed)
+- Scoped to review window only (no conflict with global recording hotkeys from Phase 3)
+
+#### Impact
+- **Phase 5 (Media/AV Specialist):** ExportEngine can read MarkerManager.cutRegions directly; frame-precision ready
+- **Phase 3+ (Swift/macOS):** MarkerManager API complete; no Recording phase changes needed
+- **UI Patterns:** Keyboard shortcuts + async loading patterns established for future phases
+
+#### Files Created
+- VideoPreviewPlayer.swift
+- WaveformView.swift
+- ThumbnailStrip.swift
+- CutRegionOverlay.swift
+- TimelineView.swift
+- ReviewWindow.swift
+
+#### Risks & Mitigations
+- **Long Recordings (30+ min):** Slow thumbnail generation → async + progress bar (future: disk caching)
+- **Gesture Conflicts When Zoomed:** DragGesture has priority; future modifier key for scroll-only mode
+- **Swift 6 Concurrency Warnings:** Documented as safe; revisit when Swift 6.1+ improves diagnostics
+
+---
