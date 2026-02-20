@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "assignments": [
+    {
+      "assignment_id": "init-2025-01-25",
+      "timestamp": "2025-01-25T00:00:00Z",
+      "universe": "matrix",
+      "agent_count": 5,
+      "agents": ["Neo", "Trinity", "Morpheus", "Tank", "Switch"]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "allowlist": ["matrix", "lord-of-the-rings", "office-space", "hackers", "ocean-eleven"],
+  "capacity": {
+    "small": 6,
+    "medium": 12,
+    "large": 25
+  }
+}
