@@ -796,3 +796,81 @@ Integrated ProjectStore and PreferencesWindow into DemoRecorderApp.swift main co
 - Views/RedactionOverlay.swift — Enhanced (resize handles, mode switching)
 - Views/PreferencesWindow.swift — Complete (@AppStorage integration)
 - DemoRecorderApp.swift — Coordinator pattern finalized
+
+---
+
+## 2026-02-21: Phase 8 - Onboarding Flow (AppDelegate) ✅
+
+**Status:** ✅ Completed  
+**Timestamp:** 2026-02-21T00:00:00Z  
+**Requested by:** Jordan Selig
+
+### Deliverable
+Integrated onboarding flow into AppDelegate to show on first launch with permission gating.
+
+### Implementation Details
+
+**AppDelegate Enhancement:**
+- Added `onboardingWindow` and `onboardingCoordinator` properties to hold references
+- `applicationDidFinishLaunching()` checks `OnboardingCoordinator.shouldShowOnboarding()`
+- Calls `showOnboarding()` if first launch or permissions revoked
+- Window creation pattern matches `RecordingCoordinator.showCaptureSourcePicker()`
+
+**Onboarding Behavior:**
+1. **First Launch Check:** Uses UserDefaults key "hasCompletedOnboarding"
+2. **Permission Gating:** Screen recording must be granted before onboarding completes (blocks "Get Started")
+3. **Window Lifecycle:** 
+   - Activates app to `.regular` policy and brings window to front
+   - Window is non-closable until screen recording granted (modal-like)
+   - `dismissOnboarding()` returns app to `.accessory` (menu bar only)
+4. **Multi-Step Flow:** Welcome → Screen Recording → Microphone → Speech Recognition → Complete
+
+**Key Classes Leveraged:**
+- `OnboardingCoordinator`: Manages step navigation, permission state, UserDefaults flag
+- `OnboardingWindow`: Multi-step SwiftUI view with progress indicator
+- Integration points: RequestScreenRecordingPermission (opens System Settings), RequestMicrophonePermission, RequestSpeechRecognitionPermission
+
+**Files Modified:**
+- DemoRecorderApp.swift — AppDelegate implementation complete
+
+**Files Created (by Neo):**
+- Views/OnboardingWindow.swift — Coordinator + UI views for all steps
+
+## Learnings
+
+1. **Window Reference Lifecycle:** NSWindow instances must be retained by a property to prevent deallocation. Using optional properties and assigning on show/dismissing on close prevents lifecycle bugs.
+
+2. **App Activation Policy Timing:** Must call `setActivationPolicy(.regular)` BEFORE `makeKeyAndOrderFront()` for windows to properly activate. Returning to `.accessory` after onboarding keeps app in menu bar only mode.
+
+3. **ScreenCaptureKit Permission Pattern:** Unlike audio/speech, screen recording permission requires manual System Settings access (no programmatic request API). `OnboardingCoordinator.requestScreenRecordingPermission()` opens settings via URL scheme, then `refreshPermissionStates()` re-checks when user returns.
+
+4. **Modal-Like Behavior Without NSAlert:** Removing `.closable` from styleMask + preventing navigation without granted permission creates modal-like UX without NSAlert blocking. Users can navigate back to fix permissions.
+
+5. **Coordinator Ownership:** AppDelegate holds coordinator reference to maintain state. Coordinator calls back via closure (`onDismiss`) to trigger AppDelegate cleanup.
+
+## Phase 8 Summary (2026-02-20)
+
+**Agents:** Morpheus agent-22 (PreferencesWindow), agent-26 (Recent Recordings), agent-30 (Onboarding Wiring)
+
+**Deliverables Completed:**
+1. PreferencesWindow with tabbed interface (hotkey customization)
+2. MenuBarExtra integration with recent projects list
+3. ProjectStore connection for fetching recent recordings
+4. Onboarding window presentation on first launch
+5. AppDelegate coordination with OnboardingCoordinator
+6. Window dismissal with activation policy transitions
+7. Orchestration logs: 1 Morpheus agent (multi-dispatch) documented
+
+**Coordination:**
+- All three agents (22, 26, 30) coordinated via team.md notifications
+- PreferencesWindow (22) integrates with ProjectStore (Neo)
+- Recent recordings (26) depends on ProjectStore availability
+- Onboarding wiring (30) completes first-launch experience
+- Final DemoRecorderApp ties together all subsystems
+
+**Architectural Pattern:**
+- Preference persistence via UserDefaults
+- Window lifecycle management for modal-like behavior
+- Observable state coordination across multiple views
+- Permission state tracking with re-check on return from System Settings
+

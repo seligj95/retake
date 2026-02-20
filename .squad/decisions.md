@@ -1122,3 +1122,42 @@ Built a two-tier model system with automatic chunking support:
 - Search UI (find words, jump to timeline position)
 
 ---
+
+### 2026-02-20: Onboarding Permission Flow Design
+**By:** Neo (Lead Architect)  
+**Status:** Implemented  
+**Scope:** Phase 8 — First-Launch Onboarding
+
+Implement multi-step first-launch onboarding flow:
+1. Mandatory screen recording permission (cannot dismiss until granted)
+2. Optional microphone and speech recognition (skip buttons provided)
+3. System Settings redirect for screen recording (no programmatic API)
+4. In-app permission requests for microphone/speech (native APIs)
+5. UserDefaults flag `hasCompletedOnboarding` for first-launch detection
+6. Re-show onboarding if screen recording permission revoked
+
+**Rationale:**
+- DemoRecorder fundamentally requires ScreenCaptureKit — app unusable without it
+- Microphone/speech are enhancements, not core functionality
+- macOS has no programmatic API for screen recording permission request
+- System Settings redirect provides best UX given platform constraints
+- UserDefaults simpler than file markers; checking permission states alone would re-trigger onboarding every time permissions change
+
+**Components:**
+- OnboardingCoordinator (@MainActor @Observable) — state management and permission handling
+- OnboardingWindow — 5-step flow (Welcome → ScreenRecording → Microphone → SpeechRecognition → Complete)
+- Permission checks via ScreenCaptureKit, AVFoundation, Speech framework
+- Window behavior: shown on first launch, no close button until screen recording granted, toggles NSApp activation policy
+
+**Alternatives Rejected:**
+- All permissions at once: Too overwhelming, lacks step-by-step guidance
+- Just-in-time requests: Poor UX (permission error during recording attempt)
+- Optional screen recording: App completely non-functional without it
+- File-based first launch: Unnecessary complexity vs. UserDefaults
+
+**Consequences:**
+- RecordingEngine can assume screen recording permission exists
+- Microphone/speech permission handling remains defensive (user may skip)
+- Future Preferences window can reuse permission step views
+
+---
