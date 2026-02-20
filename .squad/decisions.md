@@ -216,3 +216,146 @@ Use `SCRecordingOutput` + `SCRecordingOutputConfiguration` for direct file writi
 #### Related Decisions
 - Minimum macOS 15.0+ deployment target (Phase 0)
 - HEVC codec for high-quality output (this decision)
+
+---
+
+### 2025-02-20: NSEvent-Based Hotkey System
+**Date:** 2025-02-20  
+**Agent:** Trinity (Swift/macOS Specialist)  
+**Status:** Implemented  
+**Scope:** Phase 3 — Hotkey System & Marker Management
+
+#### Context
+
+Phase 3 requires global hotkey registration for recording control and marker management. The KeyboardShortcuts SPM dependency is currently commented out due to Swift 6.2 macro plugin incompatibility with CLI builds.
+
+#### Decision
+
+Use `NSEvent.addGlobalMonitorForEvents` as the primary hotkey implementation, abstracted behind a `HotkeyRegistrar` protocol to enable future migration to KeyboardShortcuts when Swift 6.2 macro support stabilizes.
+
+#### Rationale
+
+**Why NSEvent:**
+1. **Native API:** Built into AppKit, no external dependencies
+2. **Swift 6.0 Compatible:** Works with strict concurrency checking
+3. **Simple Implementation:** Direct event monitoring without macro complexity
+4. **Temporary Solution:** Protocol abstraction allows clean swap to KeyboardShortcuts later
+
+**Trade-offs:**
+- Requires Accessibility permissions (TCC prompt)
+- Less user-friendly than KeyboardShortcuts' recorder UI for customization
+- Manual keyCode/modifier checking vs library's shortcut abstraction
+
+**Alternatives Considered:**
+
+**Option A: Wait for KeyboardShortcuts** — Delays Phase 3 indefinitely. **Rejected:** Blocks development.
+
+**Option B: Carbon API** — Legacy (HIToolbox), deprecated. **Rejected:** Modern Swift prefers AppKit/Cocoa.
+
+**Option C: NSEvent (chosen)** — Native, modern, protocol-abstracted.
+
+#### Implementation Details
+
+- Protocol: `HotkeyRegistrar` with `register/unregister/unregisterAll` methods
+- Implementation: `NSEventHotkeyRegistrar` using global event monitors
+- Actor isolation: Protocol and conformance both `@MainActor` to prevent data races
+- Cleanup: Monitors auto-deallocate, no manual removal needed in deinit
+- Handler dispatch: Wrapped in `Task { @MainActor }` for safe main-actor execution
+
+#### Migration Path
+
+When KeyboardShortcuts is restored:
+1. Implement `KeyboardShortcutsRegistrar: HotkeyRegistrar`
+2. Swap registrar in `HotkeyConfiguration` initializer
+3. Add preferences UI with `KeyboardShortcuts.Recorder` view
+
+#### Related Files
+- `DemoRecorder/Recording/HotkeyConfiguration.swift` — Protocol and NSEvent implementation
+- `DemoRecorder/Recording/MarkerManager.swift` — Integrates with hotkey handlers
+
+---
+
+### 2025-02-20: NSPanel + SwiftUI for Floating Always-On-Top Overlay
+**Date:** 2025-02-20  
+**By:** Morpheus (SwiftUI/UI Specialist)  
+**Status:** Implemented  
+**Scope:** Phase 3 — FloatingStatusBar
+
+#### Context
+Phase 3 requires a floating recording status bar that stays on top of all windows, shows recording state/duration, and provides visual feedback when in "cut mode" (bracket-cut editing).
+
+#### Decision
+Use **NSPanel** with **NSHostingView** wrapping SwiftUI content, rather than pure SwiftUI Window API.
+
+#### Rationale
+
+**Why NSPanel instead of SwiftUI Window:**
+1. **Always-on-top guarantee:** NSPanel's `.floating` window level ensures overlay stays above all app windows, including fullscreen content
+2. **Fine-grained control:** Access to NSPanel properties not exposed in SwiftUI Window API:
+   - `isMovableByWindowBackground` — draggable anywhere
+   - `hidesOnDeactivate = false` — persist when clicking other apps
+   - `collectionBehavior` — precise Mission Control/Spaces behavior
+3. **Transparency:** `backgroundColor = .clear` + `isOpaque = false` for proper alpha blending
+4. **Non-activating:** `.nonactivatingPanel` prevents focus stealing during recording
+
+**Why NSHostingView:**
+- Best of both worlds: NSPanel window management + SwiftUI declarative UI
+- SwiftUI handles dark mode, layout, animations, state bindings automatically
+- NSHostingView is the standard bridge pattern for AppKit+SwiftUI hybrid UIs
+
+**Alternatives Considered:**
+
+**Option A: Pure SwiftUI Window** — SwiftUI's `.windowLevel()` modifier insufficient for always-on-top + transparent background requirements. No access to collection behaviors. **Rejected.**
+
+**Option B: Pure AppKit NSView** — Requires manual layout, dark mode handling, animation. High complexity vs SwiftUI declarative code. **Rejected.**
+
+#### Implementation Pattern
+
+```swift
+// NSPanel setup
+let panel = NSPanel(
+    contentRect: NSRect(x: 0, y: 0, width: 200, height: 50),
+    styleMask: [.nonactivatingPanel, .titled, .closable, .utilityWindow],
+    backing: .buffered,
+    defer: false
+)
+
+panel.contentView = NSHostingView(rootView: FloatingStatusBarView(...))
+panel.level = .floating
+panel.collectionBehavior = [.canJoinAllSpaces, .stationary, .fullScreenAuxiliary]
+panel.isMovableByWindowBackground = true
+panel.backgroundColor = .clear
+```
+
+```swift
+// SwiftUI content
+struct FloatingStatusBarView: View {
+    var body: some View {
+        HStack { /* status content */ }
+            .background(.ultraThinMaterial) // Native macOS translucency
+            .cornerRadius(8)
+    }
+}
+```
+
+#### Trade-offs
+
+**Pros:**
+- Guaranteed always-on-top behavior
+- Proper transparency and translucency effects
+- Draggable, non-intrusive UX
+- SwiftUI benefits (state binding, dark mode, animations)
+
+**Cons:**
+- Hybrid AppKit/SwiftUI requires understanding both APIs
+- NSPanel lifecycle must be manually managed (show/hide)
+- Cannot use pure SwiftUI lifecycle hooks (e.g., `.onAppear` for window events)
+
+#### Related Decisions
+- Phase 3 hotkey system (will trigger show/hide)
+- MarkerManager integration (will drive isInCutMode visual state)
+
+#### References
+- Apple HIG: [Panels and Alerts](https://developer.apple.com/design/human-interface-guidelines/panels)
+- [NSPanel Documentation](https://developer.apple.com/documentation/appkit/nspanel)
+- [NSHostingView Documentation](https://developer.apple.com/documentation/swiftui/nshostingview)

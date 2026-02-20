@@ -98,3 +98,80 @@ Built complete ScreenCaptureKit recording engine with macOS 15+ SCRecordingOutpu
 **Build Status:** ✅ Compiles cleanly with `swift build`
 
 **Next Phase:** Phase 3 (Hotkey System & Marker Management) — global shortcuts, MarkerManager, FloatingStatusBar
+
+### 2025-02-20: Phase 3 — Hotkey System & Marker Management
+**Status:** ✅ COMPLETED
+
+Built global hotkey registration system and marker management infrastructure for bracket-cut editing workflow.
+
+**Files Created:**
+- `DemoRecorder/Recording/HotkeyConfiguration.swift` — Global hotkey registration with protocol abstraction
+- `DemoRecorder/Recording/MarkerManager.swift` — Cut region and chapter marker management
+
+**Architecture Decisions:**
+
+1. **Hotkey Registration Protocol Pattern**
+   - Created `HotkeyRegistrar` protocol to abstract hotkey implementation
+   - Enables future migration from NSEvent to KeyboardShortcuts SPM when Swift 6.2 macro support stabilizes
+   - Default implementation: `NSEventHotkeyRegistrar` using `NSEvent.addGlobalMonitorForEvents`
+   - Protocol isolated to `@MainActor` to prevent data races
+
+2. **NSEvent-Based Global Hotkeys**
+   - Uses `NSEvent.addGlobalMonitorForEvents(matching: .keyDown)` for global hotkey capture
+   - Requires Accessibility permissions on macOS 10.15+
+   - Default hotkey bindings:
+     - ⌘⇧R: Start/Stop recording
+     - ⌘⇧X: Toggle cut mode (bracket-cut start/end)
+     - ⌘⇧M: Drop chapter marker
+   - Handlers wrapped in `Task { @MainActor }` to safely dispatch to main actor
+
+3. **Bracket-Cut Toggle Behavior**
+   - First press: Enters cut mode, records start time with lookback applied
+   - Second press: Exits cut mode, creates `CutRegion` from start to current time
+   - Default lookback: 5 seconds (configurable)
+   - Lookback rationale: User typically realizes mistake after it happens, not during
+
+4. **Marker Models**
+   - `CutRegion`: Start/end CMTime pair representing sections to remove on export
+   - `ChapterMarker`: Single CMTime + label for navigation
+   - Both use UUID for identity (support deletion/modification in UI)
+   - CMTime extended with Codable conformance for project persistence
+
+5. **State Management**
+   - `MarkerManager` is `@MainActor` + `@Observable` for SwiftUI integration
+   - Tracks `isInCutMode` and `currentCutStart` for toggle state
+   - Arrays of cut regions and chapter markers
+   - Methods for add/remove/update with frame-precise editing support
+
+6. **Concurrency & Swift 6.0 Strict Mode**
+   - Protocol isolated to `@MainActor` to prevent conformance isolation warnings
+   - Deinit cleanup note: NSEvent monitors auto-clean on deallocation
+   - All marker operations are main-actor isolated (UI-bound data)
+
+**Integration Points:**
+- `HotkeyConfiguration.register(action:handler:)` — Register hotkey handlers in RecordingEngine
+- `MarkerManager.toggleCutMode(currentTime:)` — Called from hotkey handler with `RecordingEngine.recordingDuration`
+- `MarkerManager.dropChapterMarker(time:label:)` — Called from chapter hotkey handler
+
+**Technical Patterns:**
+- Protocol abstraction for library migration (KeyboardShortcuts → NSEvent → future)
+- CMTime arithmetic for lookback calculation (`CMTime(seconds:)`, subtraction)
+- Swift 6.0 actor isolation enforcement
+- Observable pattern for real-time UI updates
+
+**Build Status:** ✅ Compiles cleanly with `swift build`
+
+**Next Phase:** Phase 4 (Review UI) — Timeline view, video preview, waveform rendering, cut region editing
+
+### 2026-02-20: Phase 3 Completion — Hotkey System & Marker Management
+**Status:** ✅ COMPLETED
+**Agent:** Trinity + Team Integration
+
+Phase 3 hotkey and marker management system fully integrated and operational. Work continues into Phase 4 (Review UI) with timeline/preview infrastructure.
+
+**Deliverables Verified:**
+- HotkeyConfiguration.swift operational with NSEvent protocol abstraction
+- MarkerManager.swift tracking cut regions and chapter markers
+- Integration complete with RecordingCoordinator
+- FloatingStatusBar integration ready (Morpheus completed complementary UI)
+- Full build success via swift build and Xcode project
