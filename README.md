@@ -2,6 +2,8 @@
 
 A lightweight screen recording app for macOS with live redo, redaction, trim, and pause/resume. Record your screen, re-do any section on the fly, blur sensitive areas, and trim the result — all from your menu bar.
 
+![Redo Interface Preview](assets/redo-preview.png)
+
 ## Features
 
 - **Screen & Window Recording** — Record your full screen or a specific window using ScreenCaptureKit
