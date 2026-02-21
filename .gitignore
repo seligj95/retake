@@ -1,0 +1,25 @@
+# Build artifacts
+.build/
+Retake.app/
+Retake.app.zip
+
+# Swift Package Manager
+Package.resolved
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Xcode
+xcuserdata/
+DerivedData/
+
+# Squad (legacy)
+.squad/
+
+# Copilot
+.copilot/
+
+# Stale old project
+DemoRecorder.xcodeproj/

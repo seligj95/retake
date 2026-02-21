@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		012F700AEF444FDBA5CE6C56 /* RegionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4404BC033A40348B1E8507 /* RegionSelector.swift */; };
+		0F7E56A24EB64ED7AC927D54 /* CaptureSourcePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB1D85ED2164486BEBF45CD /* CaptureSourcePicker.swift */; };
+		263EBE7B67404D33A57619E4 /* RetakeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562DBB11006F41B69D835D7C /* RetakeApp.swift */; };
+		7C43768DC32F4295A4958DDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B80D852840DD4A77B4A5099C /* Assets.xcassets */; };
+		AA0303030303030303030303 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0303030303030303030303 /* Project.swift */; };
+		AA0404040404040404040404 /* ProjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0404040404040404040404 /* ProjectStore.swift */; };
+		AA0505050505050505050505 /* HotkeyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0505050505050505050505 /* HotkeyConfiguration.swift */; };
+		AA1111111111111111111111 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1111111111111111111111 /* OnboardingWindow.swift */; };
+		AA1212121212121212121212 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1212121212121212121212 /* PreferencesWindow.swift */; };
+		AA1818181818181818181818 /* VideoPreviewPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1818181818181818181818 /* VideoPreviewPlayer.swift */; };
+		AA2020202020202020202020 /* RedoPreviewPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2020202020202020202020 /* RedoPreviewPanel.swift */; };
+		AA2525252525252525252525 /* RedactionRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2525252525252525252525 /* RedactionRegion.swift */; };
+		AA2626262626262626262626 /* RedactionCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2626262626262626262626 /* RedactionCompositor.swift */; };
+		AA2727272727272727272727 /* RedactionEditorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2727272727272727272727 /* RedactionEditorWindow.swift */; };
+		AA2828282828282828282828 /* TrimEditorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2828282828282828282828 /* TrimEditorWindow.swift */; };
+		AA2929292929292929292929 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2929292929292929292929 /* AppVersion.swift */; };
+		AA3030303030303030303030 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3030303030303030303030 /* UpdateService.swift */; };
+		B89FE1690A0A42358E9CA04B /* FloatingStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86965A0E4C8428C8ADD239E /* FloatingStatusBar.swift */; };
+		BDCFB6C7BF3D4E348B7A6686 /* RecordingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AFCCEB2B5542148AD061E1 /* RecordingEngine.swift */; };
+		FEBE72FF3E74494B9CA173F4 /* RetakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8E5BC176F54B4D8875CABF /* RetakeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7EB848FE245E4DCF9DD9BA82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AA03C24EE904FE0ACD9184B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F6C2D701E484FB2BA6A7CB9;
+			remoteInfo = Retake;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00817E0BB87C4FDC83D6F2EF /* Retake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Retake.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		175E0F853E8A47DDB8C56EEF /* RetakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetakeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B8E5BC176F54B4D8875CABF /* RetakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetakeTests.swift; sourceTree = "<group>"; };
+		42453207DB2A46E9914949C1 /* Retake.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Retake.entitlements; sourceTree = "<group>"; };
+		562DBB11006F41B69D835D7C /* RetakeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetakeApp.swift; sourceTree = "<group>"; };
+		6BB1D85ED2164486BEBF45CD /* CaptureSourcePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureSourcePicker.swift; sourceTree = "<group>"; };
+		6F4404BC033A40348B1E8507 /* RegionSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelector.swift; sourceTree = "<group>"; };
+		719B737E7A384AAE95B7CD2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A86965A0E4C8428C8ADD239E /* FloatingStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingStatusBar.swift; sourceTree = "<group>"; };
+		B6AFCCEB2B5542148AD061E1 /* RecordingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEngine.swift; sourceTree = "<group>"; };
+		B80D852840DD4A77B4A5099C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF0303030303030303030303 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		FF0404040404040404040404 /* ProjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStore.swift; sourceTree = "<group>"; };
+		FF0505050505050505050505 /* HotkeyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyConfiguration.swift; sourceTree = "<group>"; };
+		FF1111111111111111111111 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
+		FF1212121212121212121212 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		FF1818181818181818181818 /* VideoPreviewPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewPlayer.swift; sourceTree = "<group>"; };
+		FF2020202020202020202020 /* RedoPreviewPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedoPreviewPanel.swift; sourceTree = "<group>"; };
+		FF2525252525252525252525 /* RedactionRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactionRegion.swift; sourceTree = "<group>"; };
+		FF2626262626262626262626 /* RedactionCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactionCompositor.swift; sourceTree = "<group>"; };
+		FF2727272727272727272727 /* RedactionEditorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedactionEditorWindow.swift; sourceTree = "<group>"; };
+		FF2828282828282828282828 /* TrimEditorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimEditorWindow.swift; sourceTree = "<group>"; };
+		FF2929292929292929292929 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
+		FF3030303030303030303030 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A36F7A195514E908F854CCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6EA008E11A6246E59AF0FB9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		23C14DA115A34E0783BC764E /* RetakeTests */ = {
+			isa = PBXGroup;
+			children = (
+				2B8E5BC176F54B4D8875CABF /* RetakeTests.swift */,
+			);
+			path = RetakeTests;
+			sourceTree = "<group>";
+		};
+		DD0101010101010101010101 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FF3030303030303030303030 /* UpdateService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		366C27A6F35B4BB89FF8DD10 /* Retake */ = {
+			isa = PBXGroup;
+			children = (
+				562DBB11006F41B69D835D7C /* RetakeApp.swift */,
+				D994C8C244054DA78A6044C2 /* Recording */,
+				84E32E5C87DA429A82C6F1E7 /* Views */,
+				CC0101010101010101010101 /* Models */,
+				DD0101010101010101010101 /* Services */,
+				B80D852840DD4A77B4A5099C /* Assets.xcassets */,
+				719B737E7A384AAE95B7CD2A /* Info.plist */,
+				42453207DB2A46E9914949C1 /* Retake.entitlements */,
+			);
+			path = Retake;
+			sourceTree = "<group>";
+		};
+		84E32E5C87DA429A82C6F1E7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A86965A0E4C8428C8ADD239E /* FloatingStatusBar.swift */,
+				FF1111111111111111111111 /* OnboardingWindow.swift */,
+				FF1212121212121212121212 /* PreferencesWindow.swift */,
+				FF1818181818181818181818 /* VideoPreviewPlayer.swift */,
+				FF2020202020202020202020 /* RedoPreviewPanel.swift */,
+				FF2727272727272727272727 /* RedactionEditorWindow.swift */,
+				FF2828282828282828282828 /* TrimEditorWindow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CC0101010101010101010101 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF0303030303030303030303 /* Project.swift */,
+				FF0404040404040404040404 /* ProjectStore.swift */,
+				FF2525252525252525252525 /* RedactionRegion.swift */,
+				FF2929292929292929292929 /* AppVersion.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D994C8C244054DA78A6044C2 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				B6AFCCEB2B5542148AD061E1 /* RecordingEngine.swift */,
+				6BB1D85ED2164486BEBF45CD /* CaptureSourcePicker.swift */,
+				6F4404BC033A40348B1E8507 /* RegionSelector.swift */,
+				FF0505050505050505050505 /* HotkeyConfiguration.swift */,
+				FF2626262626262626262626 /* RedactionCompositor.swift */,
+			);
+			path = Recording;
+			sourceTree = "<group>";
+		};
+		E5941F459B8E4E2586BD2B29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00817E0BB87C4FDC83D6F2EF /* Retake.app */,
+				175E0F853E8A47DDB8C56EEF /* RetakeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FCB51193677F400895829C6B = {
+			isa = PBXGroup;
+			children = (
+				366C27A6F35B4BB89FF8DD10 /* Retake */,
+				23C14DA115A34E0783BC764E /* RetakeTests */,
+				E5941F459B8E4E2586BD2B29 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F6C2D701E484FB2BA6A7CB9 /* Retake */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A988466FD965423AA1242DC5 /* Build configuration list for PBXNativeTarget "Retake" */;
+			buildPhases = (
+				50C75AA22C574E7CA355A5BD /* Sources */,
+				6EA008E11A6246E59AF0FB9F /* Frameworks */,
+				33F82BD30CE84CB98136BC51 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Retake;
+			productName = Retake;
+			productReference = 00817E0BB87C4FDC83D6F2EF /* Retake.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AE38A026D2CF4F2199FBA36D /* RetakeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5994FD5F23B45FABFBB3ED6 /* Build configuration list for PBXNativeTarget "RetakeTests" */;
+			buildPhases = (
+				D699AEAA903B41E6B71F2464 /* Sources */,
+				1A36F7A195514E908F854CCD /* Frameworks */,
+				08940C89734A4FE4BC4D0BC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0D9EE38EF9704C6A9B886F2E /* PBXTargetDependency */,
+			);
+			name = RetakeTests;
+			productName = RetakeTests;
+			productReference = 175E0F853E8A47DDB8C56EEF /* RetakeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2AA03C24EE904FE0ACD9184B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					9F6C2D701E484FB2BA6A7CB9 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					AE38A026D2CF4F2199FBA36D = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 9F6C2D701E484FB2BA6A7CB9;
+					};
+				};
+			};
+			buildConfigurationList = 58B1EC7B78B542AFB2FCBF85 /* Build configuration list for PBXProject "Retake" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FCB51193677F400895829C6B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E5941F459B8E4E2586BD2B29 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9F6C2D701E484FB2BA6A7CB9 /* Retake */,
+				AE38A026D2CF4F2199FBA36D /* RetakeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		08940C89734A4FE4BC4D0BC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33F82BD30CE84CB98136BC51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C43768DC32F4295A4958DDB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50C75AA22C574E7CA355A5BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				263EBE7B67404D33A57619E4 /* RetakeApp.swift in Sources */,
+				BDCFB6C7BF3D4E348B7A6686 /* RecordingEngine.swift in Sources */,
+				0F7E56A24EB64ED7AC927D54 /* CaptureSourcePicker.swift in Sources */,
+				012F700AEF444FDBA5CE6C56 /* RegionSelector.swift in Sources */,
+				B89FE1690A0A42358E9CA04B /* FloatingStatusBar.swift in Sources */,
+				AA0303030303030303030303 /* Project.swift in Sources */,
+				AA0404040404040404040404 /* ProjectStore.swift in Sources */,
+				AA0505050505050505050505 /* HotkeyConfiguration.swift in Sources */,
+				AA1111111111111111111111 /* OnboardingWindow.swift in Sources */,
+				AA1212121212121212121212 /* PreferencesWindow.swift in Sources */,
+				AA1818181818181818181818 /* VideoPreviewPlayer.swift in Sources */,
+				AA2020202020202020202020 /* RedoPreviewPanel.swift in Sources */,
+				AA2525252525252525252525 /* RedactionRegion.swift in Sources */,
+				AA2626262626262626262626 /* RedactionCompositor.swift in Sources */,
+				AA2727272727272727272727 /* RedactionEditorWindow.swift in Sources */,
+				AA2828282828282828282828 /* TrimEditorWindow.swift in Sources */,
+				AA2929292929292929292929 /* AppVersion.swift in Sources */,
+				AA3030303030303030303030 /* UpdateService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D699AEAA903B41E6B71F2464 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEBE72FF3E74494B9CA173F4 /* RetakeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0D9EE38EF9704C6A9B886F2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F6C2D701E484FB2BA6A7CB9 /* Retake */;
+			targetProxy = 7EB848FE245E4DCF9DD9BA82 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		72AE829FE8EE4BDBB5EE4FB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retake.app.RetakeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Retake.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Retake";
+			};
+			name = Release;
+		};
+		C5C59363A2D14BB4925BAD68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		CDA99A4913A34E21934CF73B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retake.app.RetakeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Retake.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Retake";
+			};
+			name = Debug;
+		};
+		D5D791BA098C417B9B780F3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Retake/Retake.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Retake/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Retake needs microphone access to record narration with your screen recordings.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retake.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E21CCE51EF7043628E993C8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E5C168DE55A14C86AA86B22A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Retake/Retake.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Retake/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Retake needs microphone access to record narration with your screen recordings.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retake.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58B1EC7B78B542AFB2FCBF85 /* Build configuration list for PBXProject "Retake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E21CCE51EF7043628E993C8F /* Debug */,
+				C5C59363A2D14BB4925BAD68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A988466FD965423AA1242DC5 /* Build configuration list for PBXNativeTarget "Retake" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5D791BA098C417B9B780F3E /* Debug */,
+				E5C168DE55A14C86AA86B22A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5994FD5F23B45FABFBB3ED6 /* Build configuration list for PBXNativeTarget "RetakeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDA99A4913A34E21934CF73B /* Debug */,
+				72AE829FE8EE4BDBB5EE4FB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2AA03C24EE904FE0ACD9184B /* Project object */;
+}
