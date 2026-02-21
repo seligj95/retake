@@ -1,5 +1,6 @@
 # Build artifacts
 .build/
+build/
 Retake.app/
 Retake.app.zip
 
