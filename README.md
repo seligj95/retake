@@ -32,12 +32,13 @@ If you'd prefer to build locally, see [CONTRIBUTING.md](CONTRIBUTING.md) for ins
 
 ## Gatekeeper Notice
 
-Since Retake is ad-hoc signed (not notarized with an Apple Developer ID), macOS may block it the first time you open it. To allow it:
+Since Retake is ad-hoc signed (not notarized with an Apple Developer ID), macOS will block it the first time you open it. To allow it, run this in Terminal:
 
-- **Right-click** (or Control-click) `Retake.app` → select **Open** → click **Open** in the dialog
-- Or run: `xattr -cr /Applications/Retake.app` then open normally
+```
+xattr -cr /Applications/Retake.app
+```
 
-You only need to do this once.
+Then open Retake normally. You only need to do this once (and again after each update).
 
 ## Permissions
 
