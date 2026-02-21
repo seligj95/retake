@@ -1,21 +1,23 @@
 import Foundation
 import AppKit
+import Observation
 
 /// Checks GitHub Releases for new versions and can download + install updates.
 @MainActor
-final class UpdateService: ObservableObject {
+@Observable
+final class UpdateService {
     static let shared = UpdateService()
 
     private let repo = "seligj95/retake"
 
-    @Published var latestVersion: String?
-    @Published var releaseURL: URL?       // GitHub release page
-    @Published var downloadURL: URL?      // Direct .zip download
-    @Published var releaseNotes: String?
-    @Published var isChecking = false
-    @Published var isDownloading = false
-    @Published var downloadProgress: Double = 0
-    @Published var error: String?
+    var latestVersion: String?
+    var releaseURL: URL?       // GitHub release page
+    var downloadURL: URL?      // Direct .zip download
+    var releaseNotes: String?
+    var isChecking = false
+    var isDownloading = false
+    var downloadProgress: Double = 0
+    var error: String?
 
     var updateAvailable: Bool {
         guard let latest = latestVersion else { return false }

@@ -24,6 +24,7 @@
 		AA2828282828282828282828 /* TrimEditorWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2828282828282828282828 /* TrimEditorWindow.swift */; };
 		AA2929292929292929292929 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2929292929292929292929 /* AppVersion.swift */; };
 		AA3030303030303030303030 /* UpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3030303030303030303030 /* UpdateService.swift */; };
+		AA3131313131313131313131 /* AboutWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF3131313131313131313131 /* AboutWindow.swift */; };
 		B89FE1690A0A42358E9CA04B /* FloatingStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86965A0E4C8428C8ADD239E /* FloatingStatusBar.swift */; };
 		BDCFB6C7BF3D4E348B7A6686 /* RecordingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AFCCEB2B5542148AD061E1 /* RecordingEngine.swift */; };
 		FEBE72FF3E74494B9CA173F4 /* RetakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8E5BC176F54B4D8875CABF /* RetakeTests.swift */; };
@@ -64,6 +65,7 @@
 		FF2828282828282828282828 /* TrimEditorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimEditorWindow.swift; sourceTree = "<group>"; };
 		FF2929292929292929292929 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		FF3030303030303030303030 /* UpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateService.swift; sourceTree = "<group>"; };
+		FF3131313131313131313131 /* AboutWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				FF2020202020202020202020 /* RedoPreviewPanel.swift */,
 				FF2727272727272727272727 /* RedactionEditorWindow.swift */,
 				FF2828282828282828282828 /* TrimEditorWindow.swift */,
+				FF3131313131313131313131 /* AboutWindow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				AA2828282828282828282828 /* TrimEditorWindow.swift in Sources */,
 				AA2929292929292929292929 /* AppVersion.swift in Sources */,
 				AA3030303030303030303030 /* UpdateService.swift in Sources */,
+				AA3131313131313131313131 /* AboutWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

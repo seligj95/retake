@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import ScreenCaptureKit
 
 @main
 struct RetakeApp: App {
@@ -31,6 +32,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Check for updates in background
         Task {
             await UpdateService.shared.checkForUpdates()
+        }
+        
+        // Check if we just updated and need to re-grant permissions
+        checkPostUpdate()
+    }
+    
+    private func checkPostUpdate() {
+        let lastVersion = UserDefaults.standard.string(forKey: "lastRunVersion")
+        let currentVersion = AppVersion.current
+        
+        if let lastVersion, lastVersion != currentVersion {
+            UserDefaults.standard.set(currentVersion, forKey: "lastRunVersion")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let alert = NSAlert()
+                alert.messageText = "Retake Updated to v\(currentVersion)"
+                alert.informativeText = "After updating, macOS may require you to re-grant Screen Recording and Microphone permissions.\n\nTo fix this:\n1. Open System Settings > Privacy & Security > Screen Recording\n2. Toggle Retake off and back on (or remove and re-add)\n3. Do the same for Microphone if you record audio\n4. Restart Retake"
+                alert.alertStyle = .informational
+                alert.addButton(withTitle: "Open Privacy Settings")
+                alert.addButton(withTitle: "Later")
+                let response = alert.runModal()
+                if response == .alertFirstButtonReturn {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+        } else if lastVersion == nil {
+            UserDefaults.standard.set(currentVersion, forKey: "lastRunVersion")
         }
     }
     
@@ -88,6 +118,7 @@ final class RecordingCoordinator {
     private(set) var engine = RecordingEngine()
     private var sourcePickerWindow: NSWindow?
     private var preferencesWindow: NSWindow?
+    private var aboutWindow: NSWindow?
     private var floatingStatusBar: FloatingStatusBarController?
     private var redoPreviewController: RedoPreviewController?
     private var redactionEditorController: RedactionEditorController?
@@ -445,6 +476,26 @@ final class RecordingCoordinator {
         preferencesWindow = window
     }
     
+    func openAbout() {
+        NSApp.setActivationPolicy(.regular)
+        NSApp.activate(ignoringOtherApps: true)
+        
+        let aboutView = AboutWindow(updateService: UpdateService.shared)
+        
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 340, height: 380),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "About Retake"
+        window.center()
+        window.contentView = NSHostingView(rootView: aboutView)
+        window.makeKeyAndOrderFront(nil)
+        
+        aboutWindow = window
+    }
+    
     func openRecentProject(at url: URL) {
         Task {
             do {
@@ -474,7 +525,6 @@ final class RecordingCoordinator {
 
 struct MenuBarView: View {
     let coordinator: RecordingCoordinator
-    @ObservedObject private var updateService = UpdateService.shared
     
     var body: some View {
         if coordinator.isActive {
@@ -529,14 +579,8 @@ struct MenuBarView: View {
         }
         .keyboardShortcut(",", modifiers: .command)
         
-        if updateService.updateAvailable {
-            Button("Update Available: v\(updateService.latestVersion ?? "")") {
-                Task { await updateService.downloadAndInstall() }
-            }
-        } else {
-            Button("Check for Updates…") {
-                Task { await updateService.checkForUpdates() }
-            }
+        Button("About Retake…") {
+            coordinator.openAbout()
         }
         
         Divider()
