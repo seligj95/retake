@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <!-- Record dot gradient -->
+    <radialGradient id="redGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#ff4d4d"/>
+      <stop offset="70%" stop-color="#e63946"/>
+      <stop offset="100%" stop-color="#c1121f"/>
+    </radialGradient>
+    <!-- Subtle inner shadow for depth -->
+    <filter id="innerShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+      <feOffset dx="0" dy="4" result="offsetBlur"/>
+      <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"/>
+      <feFlood flood-color="#000000" flood-opacity="0.3" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="shadowDiff" operator="in"/>
+    </filter>
+    <!-- Drop shadow for record circle -->
+    <filter id="dropShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#e63946" flood-opacity="0.4"/>
+    </filter>
+    <!-- Glow for the arrow -->
+    <filter id="arrowGlow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#ffffff" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded square background (macOS icon shape) -->
+  <rect x="20" y="20" width="984" height="984" rx="220" ry="220" fill="url(#bg)"/>
+
+  <!-- Outer ring (subtle) -->
+  <circle cx="512" cy="480" r="280" fill="none" stroke="#ffffff" stroke-width="6" stroke-opacity="0.08"/>
+
+  <!-- Record dot -->
+  <circle cx="512" cy="480" r="160" fill="url(#redGlow)" filter="url(#dropShadow)"/>
+
+  <!-- Highlight on the record dot -->
+  <ellipse cx="490" cy="430" rx="60" ry="40" fill="#ffffff" fill-opacity="0.15"/>
+
+  <!-- Redo/retake arrow (circular arrow wrapping below the dot) -->
+  <g filter="url(#arrowGlow)">
+    <!-- Arrow arc path - a circular arc going ~270 degrees around -->
+    <path d="M 680 680 A 240 240 0 1 0 512 720"
+          fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-opacity="0.9"/>
+    <!-- Arrowhead -->
+    <polygon points="512,688 480,740 544,740" fill="#ffffff" fill-opacity="0.9"/>
+  </g>
+</svg>
