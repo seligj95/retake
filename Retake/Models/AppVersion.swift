@@ -2,7 +2,7 @@ import Foundation
 
 enum AppVersion {
     /// Current app version — update this when releasing a new version.
-    static let current = "1.0.3"
+    static let current = "1.0.4"
 
     /// Compare two semantic version strings. Returns:
     ///  - `.orderedAscending` if lhs < rhs (update available)

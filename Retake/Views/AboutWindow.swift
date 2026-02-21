@@ -63,14 +63,6 @@ struct AboutWindow: View {
                         .fontWeight(.medium)
                 }
 
-                if let notes = updateService.releaseNotes, !notes.isEmpty {
-                    Text(notes)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(3)
-                        .frame(maxWidth: 280)
-                }
-
                 if updateService.isDownloading {
                     ProgressView("Downloading update...")
                         .controlSize(.small)
