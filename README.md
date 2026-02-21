@@ -46,9 +46,13 @@ Retake requires the following permissions:
 2. Toggle on **Retake**
 3. Restart Retake if needed
 
+> **Note:** After an update, you may need to re-grant Screen Recording permission since macOS ties it to the specific app binary. To do this, go to Screen Recording settings, select Retake, click **−** to remove it, then click **+** to re-add `Retake.app`, and restart Retake.
+
 ### Microphone (optional)
 1. Open **System Settings > Privacy & Security > Microphone**
 2. Toggle on **Retake**
+
+> **Note:** Microphone permission may also need to be re-granted after an update.
 
 ## Usage
 
